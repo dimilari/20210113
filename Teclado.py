@@ -32,5 +32,10 @@ keyboard.start_recording()
 keyboard.wait('a')
 a = keyboard.stop_recording()
 b = list(map(str, a))
-print(type(b[0]))
+c = ''
+for i in b:
+    if not 'up' in i and len(i) <= 21:
+        c += (i[14:15])
+print(c)
+
 
