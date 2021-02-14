@@ -27,20 +27,25 @@ import time
 
 # a = keyboard.read_key()
 # print(a)
-
+chars = 'aeioun?!AEIOUN'
+spanish_chars = 'áéíóúñ¿¡ÁÉÍÓÚÑ'
 while True:
     keyboard.start_recording()
     keyboard.wait('`')
     source_line = keyboard.stop_recording()
     list_line = list(map(str, source_line))
-    c = ''
+    line = ''
     for i in list_line:
         if not 'up' in i and len(i) <= 21:
-            c += (i[14:15])
-    print(c)
-    chars = 'aeioun?!'
-    spanish_chars = 'áéíóúñ¿¡'
-    if c[-2] in chars:
-        keyboard.press(('backspace', 'backspace'))
-        ind = chars.find(c[-2])
+            line += (i[14:15])
+    print(line)
+    try:
+        line[-2] is True
+    except IndexError:
+        line = '00'
+    if line[-2] in chars:
+        keyboard.press('backspace')
+        time.sleep(0.01)
+        keyboard.press('backspace')
+        ind = chars.find(line[-2])
         keyboard.write(spanish_chars[ind])
