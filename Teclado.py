@@ -27,6 +27,7 @@ import time
 
 # a = keyboard.read_key()
 # print(a)
+
 chars = 'aeioun?!AEIOUN'
 spanish_chars = 'áéíóúñ¿¡ÁÉÍÓÚÑ'
 while True:
