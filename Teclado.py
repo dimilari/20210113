@@ -1,52 +1,34 @@
 import keyboard
-import time
-# keyboard.wait('a')
-# keyboard.write('á')
+from ctypes import windll
+from time import sleep
 
-# a = keyboard.read_hotkey()
-# b = keyboard.read_key()
-
-# keyboard.start_recording()
-# keyboard.wait('enter')
-# keyboard.stop_recording()
-# keyboard.record(until='enter')
-
-# a = keyboard.record(until='enter')
-# keyboard.play(a)
-
-# keyboard.add_word_listener('aa', func, 'a')
-# keyboard.wait('enter')
-
-# a = keyboard.record(until='enter')
-# print(a)
-# keyboard.press('backspace down')
-# KeyboardEvent(backspace down), KeyboardEvent(backspace up)
-
-
-########## keyboard.press(('backspace', 'backspace','backspace'))
-
-# a = keyboard.read_key()
-# print(a)
-
+# leemos el carácter ingresado desde el teclado con la librería 'keyboard'
+def pushed_key():
+    return keyboard.read_key()
+# determinamos el numero especial del idioma de entrada con la librería 'ctypes'
+def language():
+    user32 = windll.user32
+    hwnd = user32.GetForegroundWindow()
+    threadID = user32.GetWindowThreadProcessId(hwnd, None)
+    StartLang = user32.GetKeyboardLayout(threadID)
+    return StartLang
+a = []
 chars = 'aeioun?!AEIOUN'
 spanish_chars = 'áéíóúñ¿¡ÁÉÍÓÚÑ'
 while True:
-    keyboard.start_recording()
-    keyboard.wait('`')
-    source_line = keyboard.stop_recording()
-    list_line = list(map(str, source_line))
-    line = ''
-    for i in list_line:
-        if not 'up' in i and len(i) <= 21:
-            line += (i[14:15])
-    print(line)
-    try:
-        line[-2] is True
-    except IndexError:
-        line = '00'
-    if line[-2] in chars:
-        keyboard.press('backspace')
-        time.sleep(0.01)
-        keyboard.press('backspace')
-        ind = chars.find(line[-2])
-        keyboard.write(spanish_chars[ind])
+    if language() == 67699721:
+        if len(pushed_key()) > 1:
+            continue
+        a.append(pushed_key())
+        print(a, language())
+        if a[-1] == '`' and a[0] in chars:
+            ind = chars.find(a[0])
+            keyboard.press('backspace')
+            # pausa, usando la librería 'time'
+            sleep(0.01)
+            keyboard.press('backspace')
+            keyboard.write(spanish_chars[ind])
+        if len(a) >= 2:
+            a = a[1:]
+
+
