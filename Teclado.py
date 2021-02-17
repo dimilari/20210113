@@ -1,6 +1,7 @@
 import keyboard
 from ctypes import windll
 from time import sleep
+import win32api
 
 # leemos el carácter ingresado desde el teclado con la librería 'keyboard'
 def pushed_key():
@@ -12,11 +13,13 @@ def language():
     threadID = user32.GetWindowThreadProcessId(hwnd, None)
     StartLang = user32.GetKeyboardLayout(threadID)
     return StartLang
+
 a = []
 chars = 'aeioun?!AEIOUN'
 spanish_chars = 'áéíóúñ¿¡ÁÉÍÓÚÑ'
 while True:
     if language() == 67699721:
+        win32api.LoadKeyboardLayout("00000409", 1)
         if len(pushed_key()) > 1:
             continue
         a.append(pushed_key())
