@@ -3,6 +3,7 @@ from ctypes import windll
 from time import sleep
 import win32api
 
+
 # leemos el carácter ingresado desde el teclado con la librería 'keyboard'
 def pushed_key():
     return keyboard.read_key()
